@@ -80,7 +80,7 @@ public class BeggarDAO extends DAO {
 			rs = psmt.executeQuery();
 			
 			if (!rs.next()) {
-				System.out.println("없는 번호입니다.");
+				b = null;
 			}
 			else {
 			b.setNum(rs.getInt("num"));
