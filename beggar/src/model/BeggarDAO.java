@@ -14,7 +14,7 @@ public class BeggarDAO extends DAO {
 	ResultSet rs;
 	
 	public void newBeggar(Beggar beggar) {
-		sql = "insert into beggar (name, money, hunger, tiredness, level, fight, thief) values(?, ?, ?, ?, ?, ?, ?)";
+		sql = "insert into beggar (name, money, hunger, tiredness, level, fight, thief, begCnt, fightEnding, ending) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -26,6 +26,9 @@ public class BeggarDAO extends DAO {
 			psmt.setInt(5, beggar.getLevel());
 			psmt.setInt(6, beggar.getFight());
 			psmt.setInt(7, beggar.getThief());
+			psmt.setInt(8, beggar.getBegCnt());
+			psmt.setInt(9, beggar.getFightEnding());
+			psmt.setString(10, beggar.getEnding());
 			
 			int r = psmt.executeUpdate();
 			
@@ -58,6 +61,9 @@ public class BeggarDAO extends DAO {
 			b.setLevel(rs.getInt("level"));
 			b.setFight(rs.getInt("fight"));
 			b.setThief(rs.getInt("thief"));
+			b.setBegCnt(rs.getInt("begCnt"));
+			b.setFightEnding(rs.getInt("fightEnding"));
+			b.setEnding(rs.getString("ending"));
 			array.add(b);
 			}
 			
@@ -95,6 +101,9 @@ public class BeggarDAO extends DAO {
 			b.setLevel(rs.getInt("level"));
 			b.setFight(rs.getInt("fight"));
 			b.setThief(rs.getInt("thief"));
+			b.setBegCnt(rs.getInt("begCnt"));
+			b.setFightEnding(rs.getInt("fightEnding"));
+			b.setEnding(rs.getString("ending"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -105,7 +114,7 @@ public class BeggarDAO extends DAO {
 	
 	public void saveGame(Beggar beggar) {
 		
-		sql = "update beggar set money=?, hunger=?, tiredness=?, level=?, fight=?, thief=? where num=?";
+		sql = "update beggar set money=?, hunger=?, tiredness=?, level=?, fight=?, thief=?, begCnt=?, fightEnding=?, ending=? where num=?";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -116,8 +125,11 @@ public class BeggarDAO extends DAO {
 			psmt.setInt(4, beggar.getLevel());
 			psmt.setInt(5, beggar.getFight());
 			psmt.setInt(6, beggar.getThief());
+			psmt.setInt(7, beggar.getBegCnt());
+			psmt.setInt(8, beggar.getFightEnding());
+			psmt.setString(9, beggar.getEnding());
 			
-			psmt.setInt(7, beggar.getNum());
+			psmt.setInt(10, beggar.getNum());
 			
 			int r = psmt.executeUpdate();
 			

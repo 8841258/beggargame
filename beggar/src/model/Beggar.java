@@ -10,12 +10,15 @@ public class Beggar {
 	public int level;
 	private int fight;
 	private int thief;
+	private int begCnt;
+	private int fightEnding;
+	private String ending;
 	
 	
 	public Beggar() {}
 
-
-	public Beggar(int num, String name, int money, int hunger, int tiredness, int level, int fight, int thief) {
+	public Beggar(int num, String name, int money, int hunger, int tiredness, int level, int fight, int thief,
+			int begCnt, int fightEnding, String ending) {
 		super();
 		this.num = num;
 		this.name = name;
@@ -25,8 +28,35 @@ public class Beggar {
 		this.level = level;
 		this.fight = fight;
 		this.thief = thief;
+		this.begCnt = begCnt;
+		this.fightEnding = fightEnding;
+		this.ending = ending;
 	}
 
+
+	public int getBegCnt() {
+		return begCnt;
+	}
+
+	public void setBegCnt(int begCnt) {
+		this.begCnt = begCnt;
+	}
+
+	public int getFightEnding() {
+		return fightEnding;
+	}
+
+	public void setFightEnding(int fightEnding) {
+		this.fightEnding = fightEnding;
+	}
+
+	public String getEnding() {
+		return ending;
+	}
+
+	public void setEnding(String ending) {
+		this.ending = ending;
+	}
 
 	public int getNum() {
 		return num;
