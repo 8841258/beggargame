@@ -8,12 +8,14 @@ public class Beggar {
 	private int hunger;
 	private int tiredness;
 	public int level;
+	private int fight;
+	private int thief;
 	
 	
 	public Beggar() {}
 
 
-	public Beggar(int num, String name, int money, int hunger, int tiredness, int level) {
+	public Beggar(int num, String name, int money, int hunger, int tiredness, int level, int fight, int thief) {
 		super();
 		this.num = num;
 		this.name = name;
@@ -21,6 +23,8 @@ public class Beggar {
 		this.hunger = hunger;
 		this.tiredness = tiredness;
 		this.level = level;
+		this.fight = fight;
+		this.thief = thief;
 	}
 
 
@@ -83,7 +87,28 @@ public class Beggar {
 		this.level = level;
 	}
 
-	
+
+	public int getFight() {
+		return fight;
+	}
+
+
+	public void setFight(int fight) {
+		this.fight = fight;
+	}
+
+
+	public int getThief() {
+		return thief;
+	}
+
+
+	public void setThief(int thief) {
+		this.thief = thief;
+	}
+
+
+
 	
 	
 	

@@ -14,7 +14,7 @@ public class BeggarDAO extends DAO {
 	ResultSet rs;
 	
 	public void newBeggar(Beggar beggar) {
-		sql = "insert into beggar (name, money, hunger, tiredness, level) values(?, ?, ?, ?, ?)";
+		sql = "insert into beggar (name, money, hunger, tiredness, level, fight, thief) values(?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -24,6 +24,8 @@ public class BeggarDAO extends DAO {
 			psmt.setInt(3, beggar.getHunger());
 			psmt.setInt(4, beggar.getTiredness());
 			psmt.setInt(5, beggar.getLevel());
+			psmt.setInt(6, beggar.getFight());
+			psmt.setInt(7, beggar.getThief());
 			
 			int r = psmt.executeUpdate();
 			
@@ -54,6 +56,8 @@ public class BeggarDAO extends DAO {
 			b.setHunger(rs.getInt("hunger"));
 			b.setTiredness(rs.getInt("tiredness"));
 			b.setLevel(rs.getInt("level"));
+			b.setFight(rs.getInt("fight"));
+			b.setThief(rs.getInt("thief"));
 			array.add(b);
 			}
 			
@@ -89,6 +93,8 @@ public class BeggarDAO extends DAO {
 			b.setHunger(rs.getInt("hunger"));
 			b.setTiredness(rs.getInt("tiredness"));
 			b.setLevel(rs.getInt("level"));
+			b.setFight(rs.getInt("fight"));
+			b.setThief(rs.getInt("thief"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -99,7 +105,7 @@ public class BeggarDAO extends DAO {
 	
 	public void saveGame(Beggar beggar) {
 		
-		sql = "update beggar set money=?, hunger=?, tiredness=?, level=? where num=?";
+		sql = "update beggar set money=?, hunger=?, tiredness=?, level=?, fight=?, thief=? where num=?";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -108,8 +114,10 @@ public class BeggarDAO extends DAO {
 			psmt.setInt(2, beggar.getHunger());
 			psmt.setInt(3, beggar.getTiredness());
 			psmt.setInt(4, beggar.getLevel());
+			psmt.setInt(5, beggar.getFight());
+			psmt.setInt(6, beggar.getThief());
 			
-			psmt.setInt(5, beggar.getNum());
+			psmt.setInt(7, beggar.getNum());
 			
 			int r = psmt.executeUpdate();
 			
