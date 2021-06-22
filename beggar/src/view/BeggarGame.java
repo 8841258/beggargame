@@ -21,8 +21,7 @@ public class BeggarGame {
 	int begCnt;
 
 	int fightEnding;
-	String ending = "미완";
-
+	String ending = "아직";
 
 	BeggarDAO bdao = new BeggarDAO();
 	Scanner sc = new Scanner(System.in);
@@ -195,7 +194,7 @@ public class BeggarGame {
 		System.out.println("거지의 새 이름을 입력해주세요!");
 		name = sc.next();
 
-		// 이름을 거지의 초기값과 함께 저장. 초기자금1000원, 허기50, 스트레스30, 레벨1, 싸움기술0, 도둑질기술0, 구걸횟수0, 왕초쓰러뜨림0, 엔딩 미완
+		// 이름을 거지의 초기값과 함께 저장. 초기자금1000원, 허기50, 스트레스30, 레벨1, 싸움기술0, 도둑질기술0, 구걸횟수0, 왕초처치0, 엔딩 아직
 		Beggar b = new Beggar(0, name, 1000, 50, 30, 1, 0, 0, 0, 0, ending);
 		bdao.newBeggar(b);
 
@@ -208,12 +207,12 @@ public class BeggarGame {
 		
 		ArrayList<Beggar> array = bdao.beggarList();
 
-		System.out.println("-----------지난 게임 목록-----------");
-		System.out.println("번호             거지 이름");
+		System.out.println("-----------지난 게임 목록---------------------");
+		System.out.println("번호           거지 이름           엔딩");
 		for (Beggar b : array) { //번호과 거지 이름만 출력
-			System.out.println(b.getNum() + "               " + b.getName());
+			System.out.println(b.getNum() + "             " + b.getName() + "           " + b.getEnding());
 		}
-		System.out.println("---------------------------------");
+		System.out.println("-------------------------------------------");
 
 	}
 
@@ -263,7 +262,7 @@ public class BeggarGame {
 
 	// 거지 상태 보기
 	public void status() {
-		if (tiredness > 100 || hunger > 100) {
+		if (tiredness >= 100 || hunger >= 100) {
 
 			System.err.println("\n" + name + ", 그는 성실한 거지였습니다...\n\n삼가 고인의 명복을 빕니다...\n");
 
@@ -273,8 +272,8 @@ public class BeggarGame {
 			System.out.println("가진 돈         " + money + " 원");
 			System.out.println("허기             " + hunger);
 			System.out.println("스트레스          " + tiredness);
-			System.out.println("날렵한 손기술       " + fight);
-			System.out.println("묵직한 손기술       " + thief);
+			System.out.println("묵직한 손기술       " + fight);
+			System.out.println("날렵한 손기술       " + thief);
 			System.out.println("레벨             " + level);
 			System.out.println("------------------------");
 
@@ -299,13 +298,13 @@ public class BeggarGame {
 	public void beg() {
 
 		// 죽은 상태면 할 수 없다.
-		if (tiredness > 100 || hunger > 100) {
+		if (tiredness >= 100 || hunger >= 100) {
 
 			System.err.println("그는 방금 생을 마감했습니다...\n귀신은 할 수 없습니다...");
 
 		} else {
 
-			int min = 1000 * level;
+			int min = 1000 * level ;
 			int max = 2000 * level;
 			int random = (int) ((Math.random() * (max - min)) + min);
 
@@ -362,8 +361,8 @@ public class BeggarGame {
 			// 구걸횟수가 4의 배수마다 왕초 출몰, 왕초를 쓰러뜨리면 왕초는 더이상 나타나지 않는다.
 			if (begCnt % 4 == 0 && fightEnding == 0) {
 
-				int stealMin = 2500 * level;
-				int stealMax = 3500 * level;
+				int stealMin = 3000 * level;
+				int stealMax = 4000 * level;
 				int stealMoney = (int) ((Math.random() * (stealMax - stealMin)) + stealMin);
 
 				System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -411,10 +410,11 @@ public class BeggarGame {
 			}
 
 			// 피로도나 허기가 100이 되면 사망.
-			if (tiredness > 100 || hunger > 100) {
+			if (ending != "귀신" && (tiredness >= 100 || hunger >= 100)) {
 				System.err.println("***GAME OVER...***");
 				System.err.println("거지가 생을 마감했습니다...");
 				System.err.println("그의 넋이 이곳저곳을 배회하고 있습니다...");
+				ending = "귀신";
 			}
 
 		}
@@ -422,7 +422,7 @@ public class BeggarGame {
 	
 	//배우기
 	public void learn() {
-		if (tiredness > 100 || hunger > 100) {
+		if (tiredness >= 100 || hunger >= 100) {
 			System.err.println("그는 방금 생을 마감했습니다...\n귀신은 할 수 없습니다...");
 		} 
 		else {
@@ -439,11 +439,16 @@ public class BeggarGame {
 				int yesNo = Util.readInt();
 				
 				if (yesNo == 1) {
+					if (money < 10000) {
+						System.err.println("돈이 부족합니다.");
+					}
+					else {
 					System.out.println("기술을 배웠습니다.");
 					System.out.println("당장이라도 슬쩍할 수 있을 것만 같습니다.");
 					System.out.println("날렵한 손기술이 10 증가합니다.");
 					money -= 10000;
 					thief += 10;
+					}
 				}
 
 			}
@@ -455,11 +460,16 @@ public class BeggarGame {
 				int yesNo = Util.readInt();
 				
 				if (yesNo == 1) {
+					if (money < 10000) {
+						System.err.println("돈이 부족합니다.");
+					}
+					else {
 					System.out.println("기술을 배웠습니다.");
 					System.out.println("당장이라도 쓰러뜨릴 수 있을 것만 같습니다.");
 					System.out.println("묵직한 손기술이 10 증가합니다.");
 					money -= 10000;
 					fight += 10;
+					}
 				}
 			}
 			
@@ -476,7 +486,7 @@ public class BeggarGame {
 	}
 
 	public void newLife() {
-		if (tiredness > 100 || hunger > 100) {
+		if (tiredness >= 100 || hunger >= 100) {
 			System.err.println("그는 방금 생을 마감했습니다...\n귀신은 할 수 없습니다...");
 		} else if (level != 10) {
 			System.out.println();
@@ -506,7 +516,7 @@ public class BeggarGame {
 								+ "그러나 " + name + "는(은) 그동안의 거지 생활을 청산하기로 했습니다.          \n\n\n"
 								+ "왜냐하면, " + name + "는(은) 더이상 거지가 아니기 때문입니다!           \n"
 								+ name + "는(은) 이제 무려 " + money + "원을 가진 부자입니다!                   \n"
-								+ name + "이(가) 부자가 되도록 도와주셔서 감사합니다!          \n\n\n\n\n";
+								+ name + "이(가) 부자가 되도록 도와주셔서 감사합니다!                      \n\n\n\n\n";
 					
 					Util.typingSlowly(top);
 					
@@ -607,7 +617,7 @@ public class BeggarGame {
 	//구매하기
 	public void shop() {
 		
-		if (tiredness > 100 || hunger > 100) {
+		if (tiredness >= 100 || hunger >= 100) {
 			System.err.println("그는 방금 생을 마감했습니다...\n귀신은 할 수 없습니다...");
 		}
 		
@@ -731,7 +741,13 @@ public class BeggarGame {
 
 						Util.typing(trash3);
 
-						hunger -= 3;
+						if (hunger-3 < 0) {
+							hunger = 0;
+						}
+						else {
+							hunger -= 3;
+						}
+							
 
 						// 텀 두기
 						Util.sleep(100);
